@@ -6,6 +6,7 @@ import ApiContext from '../ApiContext'
 import { countNotesForFolder } from '../notes-helpers'
 import './NoteListNav.css'
 
+
 export default class NoteListNav extends React.Component {
   static contextType = ApiContext;
 
@@ -39,6 +40,10 @@ export default class NoteListNav extends React.Component {
             <br />
             Folder
           </CircleButton>
+
+
+
+
         </div>
       </div>
     )

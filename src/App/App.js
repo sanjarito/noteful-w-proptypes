@@ -37,7 +37,7 @@ class App extends Component {
       .then(([notes, folders]) => {
         this.setState({ notes, folders })
       })
-      
+
 
       .catch(error => {
         console.error({ error })
@@ -108,6 +108,10 @@ class App extends Component {
         )}
         <Route
           path='/note/:noteId'
+          component={NotePageMain}
+        />
+        <Route
+          path='/deleteFolder/:folderId'
           component={NotePageMain}
         />
         <Route

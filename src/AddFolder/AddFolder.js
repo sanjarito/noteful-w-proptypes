@@ -4,16 +4,34 @@ import ApiContext from '../ApiContext'
 import config from '../config'
 import './AddFolder.css'
 
+
 export default class AddFolder extends Component {
   static defaultProps = {
     history: {
       push: () => { }
     },
   }
+
+  constructor (props) {
+  super(props);
+  this.state = {
+    formErrors: {foldername: ''},
+    foldernameValid: false,
+    formValid: true
+  }
+  }
+
   static contextType = ApiContext;
+
+
+
 
   handleSubmit = e => {
     e.preventDefault()
+
+    if (e.target['folder-name'].value) {
+    console.log('we are inside the function')
+
     const folder = {
       name: e.target['folder-name'].value
     }
@@ -36,14 +54,30 @@ export default class AddFolder extends Component {
       .catch(error => {
         console.error({ error })
       })
+  } else {
+    console.log("input field must be filled")
+    this.setState({formValid: false})
   }
+}
 
   render() {
+
     return (
       <section className='AddFolder'>
         <h2>Create a folder</h2>
-        <NotefulForm onSubmit={this.handleSubmit}>
+
+        <NotefulForm
+        onSubmit={this.handleSubmit}
+
+
+
+        >
           <div className='field'>
+          {this.state.formValid === false &&
+            <div className='error-message'>
+            <span> You cannot leave this field empty </span>
+            </div>
+           }
             <label htmlFor='folder-name-input'>
               Name
             </label>
@@ -55,6 +89,7 @@ export default class AddFolder extends Component {
             </button>
           </div>
         </NotefulForm>
+        
       </section>
     )
   }

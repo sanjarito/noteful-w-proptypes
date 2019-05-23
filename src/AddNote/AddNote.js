@@ -12,8 +12,20 @@ export default class AddNote extends Component {
   }
   static contextType = ApiContext;
 
+  constructor (props) {
+  super(props);
+  this.state = {
+    nameValid:false ,
+    contentValid: false,
+    folderValid: false,
+    formValid: true
+  }
+  }
+
   handleSubmit = e => {
     e.preventDefault()
+
+    if ((e.target['note-name'].value) && (e.target['note-content'].value) && (e.target['note-folder-id'].value !== 'none')) {
     const newNote = {
       name: e.target['note-name'].value,
       content: e.target['note-content'].value,
@@ -39,7 +51,12 @@ export default class AddNote extends Component {
       .catch(error => {
         console.error({ error })
       })
+      } else {
+        console.log('not all fields are filled')
+
+
   }
+}
 
   render() {
     const { folders=[] } = this.context
@@ -64,7 +81,7 @@ export default class AddNote extends Component {
               Folder
             </label>
             <select id='note-folder-select' name='note-folder-id'>
-              <option value={null}>...</option>
+              <option value='none'>...</option>
               {folders.map(folder =>
                 <option key={folder.id} value={folder.id}>
                   {folder.name}
